@@ -38,7 +38,7 @@ func (s Sem) Exece(f func() error) error {
 }
 
 // Acquires all the spots on the semaphore, effectively making sure that no other functions can execute.
-func (s Sem) Stop() {
+func (s Sem) Drain() {
 	n := cap(s)
 	for i := 0; i < n; i++ {
 		s <- struct{}{}
