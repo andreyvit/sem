@@ -33,8 +33,14 @@ func (s Sem) Exec(f func()) {
 func (s Sem) Exece(f func() error) error {
 	s.Acquire()
 	defer s.Release()
-	err := f()
-	return err
+	return f()
+}
+
+// Executes the given function with a limit on concurrency, returning a function.
+func (s Sem) Execfun(f func() func()) func() {
+	s.Acquire()
+	defer s.Release()
+	return f()
 }
 
 // Acquires all the spots on the semaphore, effectively making sure that no other functions can execute.
